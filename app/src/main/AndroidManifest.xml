@@ -11,6 +11,31 @@
         android:theme="@style/Theme.GymtonicApp">
 
         <activity
+            android:name=".activities.WelcomeActivity"
+            android:exported="true">
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+
+        </activity>
+
+
+        <!-- Login -->
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false" />
+
+        <!-- Register -->
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:exported="false" />
+
+
+
+        <activity
             android:name="com.falyrion.gymtonicapp.activities.Activity_Workout_EditRoutines"
             android:exported="false"
             android:screenOrientation="sensorPortrait"
@@ -54,12 +79,9 @@
             android:name="com.falyrion.gymtonicapp.Activity_Main"
             android:screenOrientation="sensorPortrait"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
 </manifest>
+

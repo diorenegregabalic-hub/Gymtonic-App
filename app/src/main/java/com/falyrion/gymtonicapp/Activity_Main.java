@@ -130,34 +130,31 @@ public class Activity_Main extends AppCompatActivity {
         navBar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.nav_bar_home:
-                        if (currentFragmentID != 0) {
-                            setFragmentFood(date);
-                            currentFragmentID = 0;
-                        }
-                        return true;
-
-                    case R.id.nav_bar_stats:
-                        if (currentFragmentID != 1) {
-                            setFragmentBodyStats();
-                            currentFragmentID = 1;
-                        }
-                        return true;
-
-                    case R.id.nav_bar_exersises:
-                        if (currentFragmentID != 2) {
-                            setFragmentWorkout();
-                            currentFragmentID = 2;
-                        }
-                        return true;
-
-                    case R.id.nav_bar_settings:
-                        if (currentFragmentID != 3) {
-                            setFragmentSettings();
-                            currentFragmentID = 3;
-                        }
-                        return true;
+                int itemId = item.getItemId();
+                if (itemId == R.id.nav_bar_home) {
+                    if (currentFragmentID != 0) {
+                        setFragmentFood(date);
+                        currentFragmentID = 0;
+                    }
+                    return true;
+                } else if (itemId == R.id.nav_bar_stats) {
+                    if (currentFragmentID != 1) {
+                        setFragmentBodyStats();
+                        currentFragmentID = 1;
+                    }
+                    return true;
+                } else if (itemId == R.id.nav_bar_exersises) {
+                    if (currentFragmentID != 2) {
+                        setFragmentWorkout();
+                        currentFragmentID = 2;
+                    }
+                    return true;
+                } else if (itemId == R.id.nav_bar_settings) {
+                    if (currentFragmentID != 3) {
+                        setFragmentSettings();
+                        currentFragmentID = 3;
+                    }
+                    return true;
                 }
                 return false;
             }
