@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Join the Gymtonic community"
+                android:text="Join the Gym community"
                 android:textColor="@color/text_middle"
                 android:textSize="14sp"
                 android:layout_marginTop="8dp"
