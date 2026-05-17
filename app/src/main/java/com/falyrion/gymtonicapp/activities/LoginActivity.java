@@ -1,10 +1,13 @@
 package com.falyrion.gymtonicapp.activities;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+
 import androidx.appcompat.app.AppCompatActivity;
+
 
 import com.falyrion.gymtonicapp.Activity_Main;
 import com.falyrion.gymtonicapp.R;
@@ -22,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(v -> {
 
-            // diri nimo ibutang imong login validation
+            // diri ibutang ang login validation
 
             Intent intent = new Intent(LoginActivity.this, Activity_Main.class);
             startActivity(intent);
