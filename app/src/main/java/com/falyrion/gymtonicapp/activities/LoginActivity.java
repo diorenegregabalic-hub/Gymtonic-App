@@ -21,41 +21,45 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText etEmail, etPassword;
-    Button btnLogin;
-    TextView txtRegister; // Gidugang para sa link padong Register screen
+    private EditText etEmail, etPassword;
+    private Button btnLogin;
+    private TextView txtRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Gi-link gikan sa activity_login.xml
+        // Initialize UI Elements
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
-        txtRegister = findViewById(R.id.txtRegister); // Gi-link ang text sa ubos
+        txtRegister = findViewById(R.id.txtRegister);
 
-        // Inig click sa Login Button
+        // Handle Login Request Execution
         btnLogin.setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
 
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(LoginActivity.this, "Palihog isulat ang email ug password!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             } else {
-                procesoSaLogin(email, password);
+                executeLoginRequest(email, password);
             }
         });
 
-        // KINI ANG DUGANG: Inig click sa "Create Account", mobalhin sa RegisterActivity
+        // Navigate to Registration Screen
         txtRegister.setOnClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(intent);
         });
     }
 
-    private void procesoSaLogin(String email, String password) {
+    /**
+     * Executes an HTTP POST Request to authenticate the user.
+     * Uses the local loopback address 10.0.2.2 for Android Emulator environments.
+     */
+    private void executeLoginRequest(String email, String password) {
         String url = "http://10.0.2.2:3000/api/auth/login";
 
         JSONObject jsonBody = new JSONObject();
@@ -73,17 +77,18 @@ public class LoginActivity extends AppCompatActivity {
                         String message = response.getString("message");
 
                         if (success) {
-                            Toast.makeText(LoginActivity.this, "🎉 " + message, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
 
+                            // Redirect to the main application control dashboard
                             Intent intent = new Intent(LoginActivity.this, Activity_Main.class);
                             startActivity(intent);
                             finish();
                         } else {
-                            Toast.makeText(LoginActivity.this, "❌ " + message, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Data parsing exception occurred.", Toast.LENGTH_SHORT).show();
                     }
                 },
                 error -> {
@@ -92,12 +97,12 @@ public class LoginActivity extends AppCompatActivity {
                             String errorData = new String(error.networkResponse.data);
                             JSONObject errorJson = new JSONObject(errorData);
                             String message = errorJson.getString("message");
-                            Toast.makeText(LoginActivity.this, "❌ " + message, Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, message, Toast.LENGTH_LONG).show();
                         } catch (Exception e) {
-                            Toast.makeText(LoginActivity.this, "Login incorrect!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(LoginActivity.this, "Invalid Server!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Unable to reach the server. Please check your connectivity.", Toast.LENGTH_LONG).show();
                     }
                 }
         );
